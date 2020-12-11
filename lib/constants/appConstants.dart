@@ -36,4 +36,10 @@ class AppConstants {
   get margin16 => 16.0;
 
   get font16 => 16.0;
+
+  get apiKey => "be8aa3df-ffaf-4418-9f46-f94671ff2212";
+
+  static get baseUrl => "http://api.notes.programmingaddict.com";
+
+  static get endPoint => "/notes";
 }

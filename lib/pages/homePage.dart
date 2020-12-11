@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:notes_app/constants/appConstants.dart';
+import 'package:notes_app/model/api_service.dart';
 import 'package:notes_app/model/notes_model.dart';
 import 'package:notes_app/pages/create_or_edit_notes.dart';
 import 'package:notes_app/services/services.dart';
 import 'package:notes_app/widgets/header.dart';
+import 'package:notes_app/widgets/loading.dart';
 import 'package:notes_app/widgets/swipe_to_delete_note.dart';
-import 'package:get_it/get_it.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,13 +15,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  NoteServices get services => GetIt.instance<NoteServices>();
-  List<Notes> noteList = [];
+  NotesService get services => GetIt.instance<NoteServices>();
+
+  // List<Notes> noteList = [];
+  ApiReXponse<List<Notes>> apiResponse;
+  bool isLoading = false;
 
   @override
   void initState() {
-    noteList = services.getNotes();
+    _fetchData();
     super.initState();
+  }
+
+  _fetchData() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    apiResponse = await services.getNotes();
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   String dateTimeFormatter(DateTime dateTime) {
@@ -32,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         appBar: header(context, isAppTitle: true),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: _fab(context),
-        body: _body());
+        body: isLoading ? Loading() : _body());
   }
 
   //floating action
@@ -81,21 +98,22 @@ class _HomePageState extends State<HomePage> {
               print(results);
               return results;
             },
-            key: ValueKey(noteList[index].noteId),
+            key: ValueKey(apiResponse.data[index].noteId),
             child: ListTile(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return CreateOrEditNote(
-                    noteId: noteList[index].noteId,
+                    noteId: apiResponse.data[index].noteId,
                   );
                 }));
               },
               title: Text(
-                noteList[index].noteTitle,
+                apiResponse.data[index].noteTitle,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
               subtitle: Text(
-                'Last time edited : ${dateTimeFormatter(noteList[index].dateCreated)}',
+                'Last time edited : ${dateTimeFormatter(
+                    apiResponse.data[index].createDateTime)}',
                 style: TextStyle(
                     fontSize: AppConstants().font16, color: Colors.blue),
               ),
@@ -103,6 +121,6 @@ class _HomePageState extends State<HomePage> {
           );
         },
         separatorBuilder: (context, index) => Divider(),
-        itemCount: noteList.length);
+        itemCount: apiResponse.data.length);
   }
 }
