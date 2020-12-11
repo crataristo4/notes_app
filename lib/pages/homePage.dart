@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/appConstants.dart';
 import 'package:notes_app/model/notes_model.dart';
+import 'package:notes_app/pages/create_or_edit_notes.dart';
 import 'package:notes_app/widgets/header.dart';
 
 class HomePage extends StatelessWidget {
@@ -33,7 +34,11 @@ class HomePage extends StatelessWidget {
       appBar: header(context, isAppTitle: true),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CreateOrEditNote();
+          }));
+        },
         hoverColor: Colors.green,
         backgroundColor: Colors.amber,
         child: Icon(
