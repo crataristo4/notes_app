@@ -2,27 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/constants/appConstants.dart';
 import 'package:notes_app/model/notes_model.dart';
 import 'package:notes_app/pages/create_or_edit_notes.dart';
+import 'package:notes_app/services/services.dart';
 import 'package:notes_app/widgets/header.dart';
 import 'package:notes_app/widgets/swipe_to_delete_note.dart';
+import 'package:get_it/get_it.dart';
 
-class HomePage extends StatelessWidget {
-  final noteList = [
-    new Notes(
-        noteId: "1",
-        noteTitle: "Birthday",
-        dateCreated: DateTime.now(),
-        lastTimeEdited: DateTime.now()),
-    new Notes(
-        noteId: "2",
-        noteTitle: "Sports Event",
-        dateCreated: DateTime.now(),
-        lastTimeEdited: DateTime.now()),
-    new Notes(
-        noteId: "3",
-        noteTitle: "Christmas",
-        dateCreated: DateTime.now(),
-        lastTimeEdited: DateTime.now()),
-  ];
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  NoteServices get services => GetIt.instance<NoteServices>();
+  List<Notes> noteList = [];
+
+  @override
+  void initState() {
+    noteList = services.getNotes();
+    super.initState();
+  }
 
   String dateTimeFormatter(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';

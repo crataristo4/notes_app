@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:notes_app/pages/homePage.dart';
+import 'package:notes_app/services/services.dart';
+
+setUpLocator() {
+  //register the service
+  GetIt.I.registerLazySingleton(() => NoteServices());
+}
 
 void main() {
+  setUpLocator();
   runApp(MyApp());
 }
 
