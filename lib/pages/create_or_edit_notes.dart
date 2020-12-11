@@ -7,13 +7,19 @@ class CreateOrEditNote extends StatelessWidget {
   final TextEditingController txtNoteTitle = TextEditingController();
   final TextEditingController txtNoteContent = TextEditingController();
   final key = GlobalKey<ScaffoldState>();
+  final String noteId;
+
+  CreateOrEditNote({this.noteId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
-      appBar:
-          header(context, isAppTitle: false, title: AppConstants().createNote),
+      appBar: header(context,
+          isAppTitle: false,
+          title: noteId == null
+              ? AppConstants().createNote
+              : AppConstants().editNote),
       body: ListView(
         children: [
           Padding(

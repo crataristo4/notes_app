@@ -7,18 +7,18 @@ import 'package:notes_app/widgets/header.dart';
 
 class HomePage extends StatelessWidget {
   final noteList = [
-    Notes(
-        noteId: 1,
+    new Notes(
+        noteId: "1",
         noteTitle: "Birthday",
         dateCreated: DateTime.now(),
         lastTimeEdited: DateTime.now()),
-    Notes(
-        noteId: 2,
+    new Notes(
+        noteId: "2",
         noteTitle: "Sports Event",
         dateCreated: DateTime.now(),
         lastTimeEdited: DateTime.now()),
-    Notes(
-        noteId: 1,
+    new Notes(
+        noteId: "3",
         noteTitle: "Christmas",
         dateCreated: DateTime.now(),
         lastTimeEdited: DateTime.now()),
@@ -50,6 +50,13 @@ class HomePage extends StatelessWidget {
       body: ListView.separated(
           itemBuilder: (context, index) {
             return ListTile(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CreateOrEditNote(
+                    noteId: noteList[index].noteId,
+                  );
+                }));
+              },
               title: Text(
                 noteList[index].noteTitle,
                 style: TextStyle(fontWeight: FontWeight.w700),

@@ -3,9 +3,9 @@ class AppConstants {
 
   get addNote => "Add Note";
 
-  get createNote => "Add Note";
+  get createNote => "Add new Note";
 
-  get editNote => "Add Note";
+  get editNote => "Edit Note";
 
   get saveNote => "Save Note";
 
