@@ -50,6 +50,18 @@ class HomePage extends StatelessWidget {
       body: ListView.separated(
           itemBuilder: (context, index) {
             return Dismissible(
+              background: Container(
+                color: Colors.red,
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(AppConstants().margin8),
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    )),
+              ),
               direction: DismissDirection.startToEnd,
               onDismissed: (onDismissed) {},
               confirmDismiss: (confirmDismiss) async {
