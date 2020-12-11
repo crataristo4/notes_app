@@ -23,6 +23,10 @@ class HomePage extends StatelessWidget {
         lastTimeEdited: DateTime.now()),
   ];
 
+  String dateTimeFormatter(DateTime dateTime) {
+    return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +48,11 @@ class HomePage extends StatelessWidget {
               title: Text(
                 noteList[index].noteTitle,
                 style: TextStyle(fontWeight: FontWeight.w700),
+              ),
+              subtitle: Text(
+                'Last time edited : ${dateTimeFormatter(noteList[index].dateCreated)}',
+                style: TextStyle(
+                    fontSize: AppConstants().font16, color: Colors.blue),
               ),
             );
           },

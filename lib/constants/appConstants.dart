@@ -7,4 +7,6 @@ class AppConstants {
   get margin32 => 32.0;
   get margin8 => 8.0;
   get margin16 => 16.0;
+
+  get font16 => 16.0;
 }
