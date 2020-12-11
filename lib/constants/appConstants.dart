@@ -1,5 +1,8 @@
 class AppConstants {
   get title => "Notes App";
+
+  get addNote => "Add Note";
+
   get font24 => 24.0;
   get margin32 => 32.0;
   get margin8 => 8.0;
