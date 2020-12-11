@@ -3,6 +3,14 @@ class AppConstants {
 
   get addNote => "Add Note";
 
+  get yes => "Yes delete";
+
+  get no => "No cancel";
+
+  get deleteNote => "Delete";
+
+  get deleteDialog => "Are you sure you want to delete ? ";
+
   get createNote => "Add new Note";
 
   get editNote => "Edit Note";

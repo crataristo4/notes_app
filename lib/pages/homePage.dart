@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/appConstants.dart';
 import 'package:notes_app/model/notes_model.dart';
 import 'package:notes_app/pages/create_or_edit_notes.dart';
 import 'package:notes_app/widgets/header.dart';
+import 'package:notes_app/widgets/swipe_to_delete_note.dart';
 
 class HomePage extends StatelessWidget {
   final noteList = [
@@ -49,22 +49,36 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView.separated(
           itemBuilder: (context, index) {
-            return ListTile(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return CreateOrEditNote(
-                    noteId: noteList[index].noteId,
-                  );
-                }));
+            return Dismissible(
+              direction: DismissDirection.startToEnd,
+              onDismissed: (onDismissed) {},
+              confirmDismiss: (confirmDismiss) async {
+                final results = await showDialog(
+                    context: context,
+                    builder: (_) {
+                      return SwipeToDeleteNote();
+                    });
+                print(results);
+                return results;
               },
-              title: Text(
-                noteList[index].noteTitle,
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
-              subtitle: Text(
-                'Last time edited : ${dateTimeFormatter(noteList[index].dateCreated)}',
-                style: TextStyle(
-                    fontSize: AppConstants().font16, color: Colors.blue),
+              key: ValueKey(noteList[index].noteId),
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return CreateOrEditNote(
+                      noteId: noteList[index].noteId,
+                    );
+                  }));
+                },
+                title: Text(
+                  noteList[index].noteTitle,
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                subtitle: Text(
+                  'Last time edited : ${dateTimeFormatter(noteList[index].dateCreated)}',
+                  style: TextStyle(
+                      fontSize: AppConstants().font16, color: Colors.blue),
+                ),
               ),
             );
           },

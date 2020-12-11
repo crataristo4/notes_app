@@ -9,6 +9,8 @@ class CreateOrEditNote extends StatelessWidget {
   final key = GlobalKey<ScaffoldState>();
   final String noteId;
 
+  bool get isNoteEditing => noteId != null;
+
   CreateOrEditNote({this.noteId});
 
   @override
@@ -17,9 +19,9 @@ class CreateOrEditNote extends StatelessWidget {
       key: key,
       appBar: header(context,
           isAppTitle: false,
-          title: noteId == null
-              ? AppConstants().createNote
-              : AppConstants().editNote),
+          title: isNoteEditing
+              ? AppConstants().editNote
+              : AppConstants().createNote),
       body: ListView(
         children: [
           Padding(
@@ -62,6 +64,11 @@ class CreateOrEditNote extends StatelessWidget {
                         BorderRadius.circular(AppConstants().margin8)),
                 color: Colors.red,
                 onPressed: () {
+                  if (isNoteEditing) {
+                    //update the notes in api
+                  } else {
+                    //create notes in api
+                  }
                   //save notes
                 },
                 icon: Icon(
